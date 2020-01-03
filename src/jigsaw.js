@@ -95,7 +95,7 @@ function square (x) {
 }
 
 class jigsaw {
-  constructor ({ el, width = 310, height = 155, onSuccess, onFail, onRefresh }) {
+  constructor ({ el, width = 310, height = 155, onSuccess, onFail, onRefresh, backendX }) {
     w = width
     h = height
     el.style.position = 'relative'
@@ -108,7 +108,14 @@ class jigsaw {
     this.el = el
     this.onSuccess = onSuccess
     this.onFail = onFail
-    this.onRefresh = onRefresh
+    this.onRefresh = onRefresh;
+    if (backendX < L + 10) {
+      backendX = L + 10;
+    }
+    if (backendX > w - (L + 10)) {
+      backendX = w - (L + 10);
+    }
+    this.x = backendX;
   }
 
   init () {
@@ -170,7 +177,7 @@ class jigsaw {
 
   draw () {
     // 随机创建滑块的位置
-    this.x = getRandomNumberByRange(L + 10, w - (L + 10))
+    // this.x = getRandomNumberByRange(L + 10, w - (L + 10))
     this.y = getRandomNumberByRange(10 + r * 2, h - (L + 10))
     draw(this.canvasCtx, this.x, this.y, 'fill')
     draw(this.blockCtx, this.x, this.y, 'clip')
